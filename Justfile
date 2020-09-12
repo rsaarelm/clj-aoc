@@ -1,6 +1,9 @@
 run +args:
     clj -m aoc.main run {{args}}
 
+run-test +args:
+    clj -m aoc.main test {{args}}
+
 test:
     clj -A:test:runner
 
