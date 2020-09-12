@@ -22,9 +22,9 @@
        ; Ignore terminal '%'.
        (#(if (= (peek %) "%") (pop %) %))
        (reduce
-         (fn [acc line]
-           (if (= line "%")
-             (conj acc [])
-             (conj (pop acc) (conj (peek acc) line))))
-         [[]])
+        (fn [acc line]
+          (if (= line "%")
+            (conj acc [])
+            (conj (pop acc) (conj (peek acc) line))))
+        [[]])
        (map (partial str/join "\n"))))
