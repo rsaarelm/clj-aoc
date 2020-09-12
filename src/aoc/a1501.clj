@@ -1,6 +1,7 @@
-(ns aoc2015.day01)
+(ns aoc.a1501)
 
-(def input (slurp "resources/aoc2015/1.txt"))
-(defn -main []
-  (print "Smeg!")
-  (print input))
+(defn read [input]
+  (print "TODO"))
+
+(defn eval [expr]
+  (print "TODO"))

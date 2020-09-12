@@ -1,5 +1,5 @@
 (ns aoc.a0000)
 
-(defn parse [text] (str text))
+(defn read [text] text)
 
-(defn run [input] (str input ", World!"))
+(defn eval [input] (str input ", World!"))
