@@ -5,7 +5,13 @@
   "Makes sure lines ending with \\n\\n get an empty line at the end."
   [text]
   (let [lines (str/split-lines text)]
-    (if (str/ends-with? text "\n\n") (conj lines "") lines)))
+    (cond
+      (str/ends-with? text "\n\n") (conj lines "")
+      :else lines)))
+
+(defn- pop-if
+  [p s]
+  (if (p (peek s)) (pop s) s))
 
 (defn unfortune
   "Convert text in unix fortune format into separated text chunks.
@@ -20,18 +26,17 @@
   ignored.
 
   BUGS
-  - Consecutive %-lines do not emit an empty string between them.
   - Any number of trailing newlines will be collapsed to a single newline at
     end.
   "
   [text]
-  (loop [chunks (partition-by #{"%"} (my-split-lines text))
-         result []]
-    (cond
-      (or (not (seq chunks)) (= chunks [[""]])) result
-      ; Ignore terminal %
-      (and (= (count chunks) 1) (= (ffirst chunks) "%")) result
-      (= (ffirst chunks) "%") (recur (rest chunks) (conj result ""))
-      :else (recur
-              (nnext chunks)
-              (conj result (str/join "\n" (first chunks)))))))
+  (->> text
+       (my-split-lines)
+       (pop-if #{"%"})
+       (reduce
+         (fn [acc line]
+           (if (= line "%")
+             (conj acc [])
+             (conj (pop acc) (conj (peek acc) line))))
+         [[]])
+       (map (partial str/join "\n"))))

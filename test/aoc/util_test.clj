@@ -3,7 +3,8 @@
             [aoc.util :refer :all]))
 
 (deftest unfortune-test
-  (is (= (unfortune "") []))
+  (is (= (unfortune "") [""]))
+  (is (= (unfortune "%\n%\n%\n") ["" "" ""]))
   (is (= (unfortune "a\nb") ["a\nb"]))
   (is (= (unfortune "a\nb\n") ["a\nb"]))
   (is (= (unfortune "a\n\n%\nb\n") ["a\n" "b"]))
