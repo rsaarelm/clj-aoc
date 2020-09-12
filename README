@@ -1,1 +1,45 @@
-Various coding exercises in Clojure
+Clojure framework for https://adventofcode.com/
+
+# Workflow
+
+Days are encoded by %y%d, 2015-12-18 becomes 1518. Start a new day by doing
+
+    just init-day 1518
+
+This creates skeleton files src/aoc/a1518.clj and src/aoc/a1518-2.clj for the
+first and second parts of the exercise.
+
+Save the text file input in `resources/1518.txt`
+
+The first file has functions `read` and `eval`, for parsing the text input
+downloaded from adventofcode.com and for doing the actual exercise with
+whatever you return from `eval`. Since both parts use the same input, the
+second part only defines `eval`. Replace the dummy implementations with your
+solution to the exercise.
+
+If you think you can be faster by reformatting the input manually than by
+writing a parser, convert the input into a Clojure expression and save it in
+`resources/1518.edn`. The test runner will look for edn files and will not try
+to run `read` if it finds one.
+
+Write the examples and results from adventofcode.com in
+`resoources/1518.test`, using lines with only % to separate inputs and outputs
+(Unix fortune format):
+
+    first input text
+    %
+    first output
+    %
+    second input text
+    %
+    second output
+
+Run
+
+    just run-test 1518
+
+to test your code against the tests. When the tests pass, run
+
+    just run 1518
+
+to get your result.
