@@ -7,6 +7,14 @@ run-test +args:
 test:
     clj -A:test:runner
 
+init-day day:
+    #!/usr/bin/env bash
+    if [ ! -f src/aoc/a{{day}}.clj ]; then
+    ./init-day.sh {{day}}
+    else
+    echo "Day already set up."
+    fi
+
 lint:
     clj -Sdeps '{:deps {clj-kondo {:mvn/version "RELEASE"}}}' -m clj-kondo.main --lint src
 
