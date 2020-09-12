@@ -1,7 +1,6 @@
 (ns aoc.a1501-2
+  (:require [aoc.a1501 :refer [read]])
   (:refer-clojure :exclude [read eval]))
-
-(defn read [input] (map {\( 1 \) -1} input))
 
 (defn- running-sum [acc elt]
   (conj acc (+ (peek acc) elt)))
