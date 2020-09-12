@@ -1,7 +1,6 @@
-(ns aoc.a1501)
+(ns aoc.a1501
+  (:refer-clojure :exclude [read eval]))
 
-(defn read [input]
-  (print "TODO"))
+(defn read [input] (map {\( 1 \) -1} input))
 
-(defn eval [expr]
-  (print "TODO"))
+(defn eval [expr] (reduce (partial +) 0 expr))

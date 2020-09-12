@@ -8,8 +8,10 @@
   "Try to load preformatted edn input, otherwise load unparsed input."
   [id]
   (let
-   [edn-path (str "resources/" id ".edn")
-    source-path (str "resources/" id ".txt")]
+    ; Second stage uses same input so only take first 4 chars.
+   [truncated-id (subs id 0 4)
+    edn-path (str "resources/" truncated-id ".edn")
+    source-path (str "resources/" truncated-id ".txt")]
     (try
       [:edn (edn/read-string (slurp edn-path))]
       (catch java.io.FileNotFoundException _
@@ -43,7 +45,7 @@
                (unfortune)
                (partition 2))
     test (fn [[in out]]
-           (if (= (run id in) out)
+           (if (= (->> in (run id) (str)) out)
              (print "\u001b[1;32m.\u001b[0m")
              (println "\u001b[1;31mERROR\u001b[0m" in "->" out)))]
     (run! test pairs)))
