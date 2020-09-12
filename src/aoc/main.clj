@@ -45,9 +45,11 @@
                (unfortune)
                (partition 2))
     test (fn [[in out]]
-           (if (= (->> in (run id) (str)) out)
-             (print "\u001b[1;32m.\u001b[0m")
-             (println "\u001b[1;31mERROR\u001b[0m" in "->" out)))]
+           (let
+            [result (->> in (run id) (str))]
+             (if (= result out)
+               (print "\u001b[1;32m.\u001b[0m")
+               (println "\u001b[1;31mERROR\u001b[0m" in "->" result))))]
     (run! test pairs)))
 
 (defn -main [& args]
