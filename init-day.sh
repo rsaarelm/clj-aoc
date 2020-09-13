@@ -2,6 +2,7 @@
 
 cat > src/aoc/a$1.clj << EOF
 (ns aoc.a$1
+  (:require [clojure.string :as str])
   (:refer-clojure :exclude [read eval]))
 
 (defn read [input] input)
