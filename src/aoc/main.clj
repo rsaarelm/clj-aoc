@@ -39,9 +39,15 @@
 (defn- run-test
   [id]
   (let
-   [pairs (->> (str "resources/" id ".test")
+   [process-test-data (fn [text]
+                        (let [chunks (unfortune text)]
+                     ; If there's just one chunk when parsing fortunes, assume
+                     ; it's a line format instead of a fortune format.
+                          (if (> (count chunks) 1) chunks
+                              (str/split-lines text))))
+    pairs (->> (str "resources/" id ".test")
                (slurp)
-               (unfortune)
+               (process-test-data)
                (partition 2))
     test (fn [[in out]]
            (let

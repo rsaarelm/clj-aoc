@@ -27,12 +27,22 @@ Write the examples and results from adventofcode.com in
 (Unix fortune format):
 
     first input text
+    might have multiple lines
     %
     first output
     %
     second input text
     %
     second output
+
+If all your inputs and outputs are single lines, you can leave out the %
+separators. The runner will treat each line as their own element in a file
+with no segments separated by %s:
+
+    input1
+    output1
+    input2
+    output2
 
 Run
 
