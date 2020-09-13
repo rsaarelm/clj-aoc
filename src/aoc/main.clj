@@ -1,7 +1,6 @@
 (ns aoc.main
   (:require [clojure.string :as str]
             [aoc.util :refer [unfortune]]
-            [clojure.test :refer [is]]
             [clojure.edn :as edn]))
 
 (defn- load-input
