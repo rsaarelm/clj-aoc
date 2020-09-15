@@ -28,3 +28,11 @@
             (conj (pop acc) (conj (peek acc) line))))
         [[]])
        (map (partial str/join "\n"))))
+
+(defn smart-read [str]
+  "Read string if it evals into a number, otherwise keep it as is.
+
+  Used for processing inputs that get you stuff like ('xyzzy' '123')."
+  (let
+   [expr (read-string str)]
+    (if (number? expr) expr str)))
