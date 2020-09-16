@@ -43,10 +43,14 @@
   numbery, otherwise returns it as is."
   ([str]
    (let
-    [expr (read-string str)]
+    [expr (if (empty? str) str (read-string str))]
      (if (number? expr) expr str)))
-  ([regex input]
-   (->> input
-        (re-find regex)
-        (rest)
-        (map re-read))))
+  ([regexps input]
+   (let [match (fn [str]
+                 (if (seqable? regexps)
+                   (some #(re-find % str) regexps)
+                   (re-find regexps str)))]
+     (->> input
+          (match)
+          (rest)
+          (map re-read)))))
