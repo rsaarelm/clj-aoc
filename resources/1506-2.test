@@ -1,0 +1,15 @@
+turn on 0,0 through 0,0
+%
+1
+%
+toggle 0,0 through 0,0
+%
+2
+%
+toggle 0,0 through 99,99
+%
+20000
+%
+toggle 0,0 through 999,999
+%
+2000000
