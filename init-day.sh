@@ -2,23 +2,18 @@
 
 cat > src/aoc/a$1.clj << EOF
 (ns aoc.a$1
-  (:require [clojure.string :as str])
-  (:refer-clojure :exclude [read eval]))
+  ;(:require [aoc.util :refer [re-read]])
+  ;(:require [clojure.string :as str])
+  )
 
-(defn read [input] input)
+(defn- parse [input] input)
 
-(defn eval [expr] expr)
-EOF
+(defn p1 [input] (parse input))
 
-cat > src/aoc/a$1_2.clj << EOF
-(ns aoc.a$1-2
-  (:require [aoc.a$1 :refer [read]])
-  (:refer-clojure :exclude [read eval]))
-
-(defn eval [expr] expr)
+(defn p2 [input] (parse input))
 EOF
 
 # Make git see them so they show up in FZF
-git add -N src/aoc/a$1.clj src/aoc/a$1_2.clj
-touch resources/$1.test
-git add -N resources/$1.test
+git add -N src/aoc/a$1.clj
+touch resources/$1-1.test resources/$1-2.test
+git add -N resources/$1-1.test resources/$1-2.test

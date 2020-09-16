@@ -1,13 +1,13 @@
 run +args:
     clj -m aoc.main run {{args}}
 
-run-test +args:
+test +args:
     clj -m aoc.main test {{args}}
 
-test:
+unittest:
     clj -A:test:runner
 
-init-day day:
+init day:
     #!/usr/bin/env bash
     if [ ! -f src/aoc/a{{day}}.clj ]; then
     ./init-day.sh {{day}}

@@ -1,6 +1,11 @@
-(ns aoc.a0000
-  (:refer-clojure :exclude [read eval]))
+(ns aoc.a0000)
 
-(defn read [text] text)
+(defn- parse [input] input)
 
-(defn eval [input] (str input ", World!"))
+(defn p1 [input]
+  (let [expr (parse input)]
+    expr))
+
+(defn p2 [input]
+  (let [expr (parse input)]
+    (str expr ", World!")))

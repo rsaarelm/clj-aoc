@@ -1,6 +1,13 @@
-(ns aoc.a1501
-  (:refer-clojure :exclude [read eval]))
+(ns aoc.a1501)
 
-(defn read [input] (map {\( 1 \) -1} input))
+(defn- parse [input] (map {\( 1 \) -1} input))
 
-(defn eval [expr] (reduce (partial +) 0 expr))
+(defn p1 [input] (reduce (partial +) 0 (parse input)))
+
+(defn p2 [input]
+  (let [running-sum (fn [acc elt]
+                      (conj acc (+ (peek acc) elt)))]
+    (->> (parse input)
+         (reduce running-sum [0])
+         (take-while #(>= % 0))
+         (count))))

@@ -1,8 +1,7 @@
 (ns aoc.a1505
-  (:require [clojure.string :as str])
-  (:refer-clojure :exclude [read eval]))
+  (:require [clojure.string :as str]))
 
-(defn read [input] (str/split-lines input))
+(defn- parse [input] (str/split-lines input))
 
 (defn- vowels [str] (filter (set "aeiou") str))
 
@@ -22,4 +21,26 @@
     (nastygram? str) false
     :else true))
 
-(defn eval [expr] (count (filter nice? expr)))
+(defn p1 [input]
+  (->> (parse input)
+       (filter nice?)
+       (count)))
+
+(defn- pairs2? [str]
+  (if (>= (count str) 4)
+    (or (re-find (re-pattern (subs str 0 2)) (subs str 2))
+        (recur (subs str 1)))
+    nil))
+
+(defn- dubs3? [str]
+  (->> (map vector str (rest str) (nthrest str 2))
+       (filter (fn [[a _ c]] (= a c)))
+       (first)))
+
+(defn- nice2? [str]
+  (and (pairs2? str) (dubs3? str)))
+
+(defn p2 [input]
+  (->> (parse input)
+       (filter nice2?)
+       (count)))

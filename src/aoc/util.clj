@@ -1,7 +1,7 @@
 (ns aoc.util
   (:require [clojure.string :as str]))
 
-(defn unfortune
+(defn- unfortune
   "Convert text in unix fortune format into separated text chunks.
 
   The separator is a line with a single '%' character.
@@ -14,11 +14,8 @@
   BUGS
   - Any number of trailing newlines will be collapsed to a single newline at
     end."
-  [text]
-  (->> text
-       (str/split-lines)
-       ; Hack around str/split-lines eating trailing newlines.
-       (#(if (str/ends-with? text "\n\n") (conj % "") %))
+  [lines]
+  (->> lines
        ; Ignore terminal '%'.
        (#(if (= (peek %) "%") (pop %) %))
        (reduce
@@ -29,10 +26,27 @@
         [[]])
        (map (partial str/join "\n"))))
 
-(defn smart-read [str]
-  "Read string if it evals into a number, otherwise keep it as is.
-
-  Used for processing inputs that get you stuff like ('xyzzy' '123')."
+(defn text->chunks
+  "Split multiline chunks if using fortune format, otherwise split lines."
+  [text]
   (let
-   [expr (read-string str)]
-    (if (number? expr) expr str)))
+   [lines- (str/split-lines text)
+       ; Hack around str/split-lines eating trailing newlines.
+    lines (if (str/ends-with? text "\n\n") (conj lines- "") lines-)
+    fortune-file? (some #{"%"} lines)]
+    (if fortune-file? (unfortune lines) lines)))
+
+(defn re-read
+  "Tokenize a line with a regex and convert numbery results to numbers.
+
+  When called without a regex, converts a single token to a number if it's
+  numbery, otherwise returns it as is."
+  ([str]
+   (let
+    [expr (read-string str)]
+     (if (number? expr) expr str)))
+  ([regex input]
+   (->> input
+        (re-find regex)
+        (rest)
+        (map re-read))))

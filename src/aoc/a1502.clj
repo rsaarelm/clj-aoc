@@ -1,8 +1,7 @@
 (ns aoc.a1502
-  (:require [clojure.string :as str])
-  (:refer-clojure :exclude [read eval]))
+  (:require [clojure.string :as str]))
 
-(defn read [input]
+(defn- parse [input]
   (->> input
        (str/split-lines)
        (map #(str/split % #"x"))
@@ -19,9 +18,20 @@
 (defn- paper [box]
   (+ (area box) (apply min (sides box))))
 
-(defn eval [expr]
-  (->> expr
-       (map paper)
-       (reduce +)))
+(defn- volume [[w h d]] (* w h d))
 
+(defn- round [box]
+  (let [[x y] (take 2 (sort box))]
+    (* 2 (+ x y))))
 
+(defn p1 [input]
+  (let [expr (parse input)]
+    (->> expr
+         (map paper)
+         (reduce +))))
+
+(defn p2 [input]
+  (let [expr (parse input)]
+    (->> expr
+         (map #(+ (volume %) (round %)))
+         (reduce +))))
