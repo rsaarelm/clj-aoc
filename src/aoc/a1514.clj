@@ -1,9 +1,17 @@
 (ns aoc.a1514
-  ;(:require [aoc.util :refer [re-read]])
-  ;(:require [clojure.string :as str])
-  )
+  (:require [aoc.util :refer [re-read]])
+  (:require [clojure.string :as str]))
 
-(defn- parse [input] input)
+; Reindeer a has cycle of c+d seconds
+; Reindeer spends first c seconds flying at speed b
+
+(defn- parse [input]
+  (->> input
+       (str/split-lines)
+       (map (partial re-read
+#"(.+) can fly (.+) km/s for (.+) seconds, but then must rest for (.+) seconds."))
+       (map (fn [[a s n b]] (if (= s "lose") [[a b] (- n)] [[a b] n])))
+       (into (hash-map))))
 
 (defn p1 [input] (parse input))
 
