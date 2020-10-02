@@ -2,7 +2,7 @@
 #     run 1525-1
 # Expects files src/aoc/a1525_1.clj and resources/1525.txt
 run task:
-    DAY={{task}}; clj -m aoc.a{{task}} < resources/${DAY:0:4}.txt
+    @DAY={{task}}; clj -m aoc.a{{task}} < resources/${DAY:0:4}.txt
 
 unittest:
     clj -A:test:runner
