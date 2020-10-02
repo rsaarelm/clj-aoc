@@ -2,7 +2,7 @@
 
 cat > src/aoc/a$1_1.clj << EOF
 (ns aoc.a$1-1
-  (:require [aoc.util :refer [re-read sl]
+  (:require [aoc.util :refer [re-read sl]]
             [clojure.string :as str]
             [clojure.test :refer [is]]))
 
@@ -12,40 +12,32 @@ cat > src/aoc/a$1_1.clj << EOF
        (map re-read)))
 
 (defn run [input]
-  (apply + input))
+  (parse input))
 
-(is (=
-     (->> (sl "1
-               2
-               3")
-          (parse)
-          (run))
-     6))
+(run! #(is (= (run (first %)) (second %))) (partition 2
+  [(sl "1
+        2")
+   3]))
 
-(defn -main [& args]
-  (println (run (parse (slurp *in*)))))
+(defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
 
 cat > src/aoc/a$1_2.clj << EOF
 (ns aoc.a$1-2
-  (:require [clojure.test :refer [is]]
-            [aoc.a$1-1 :refer [parse]]
-            [aoc.util :refer [sl]]))
+  (:require [aoc.a$1-1 :refer [parse]]
+            [aoc.util :refer [sl]]
+            [clojure.string :as str]
+            [clojure.test :refer [is]]))
 
 (defn run [input]
-  (apply * input))
+  (parse input))
 
-(is (=
-     (->> (sl "1
-               2
-               3
-               4")
-          (parse)
-          (run))
-     24))
+(run! #(is (= (run (first %)) (second %))) (partition 2
+  [(sl "1
+        2")
+   3]))
 
-(defn -main [& args]
-  (println (run (parse (slurp *in*)))))
+(defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
 
 # Make git see them so they show up in FZF
