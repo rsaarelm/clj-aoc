@@ -21,3 +21,11 @@
   (is (= (re-read #"(.+);(.+)" "xyzzy;123") ["xyzzy" 123]))
   (is (= (re-read [#"(foo)" #"(bar)(.+)"] "foo") ["foo"]))
   (is (= (re-read [#"(foo)" #"(bar)(.+)"] "bar666") ["bar" 666])))
+
+(deftest sl-test
+  (is (= (sl "") ""))
+  (is (= (sl "abc") "abc"))
+  (is (= (sl " abc") " abc"))
+  (is (= (sl "one
+              two
+              three") "one\ntwo\nthree")))

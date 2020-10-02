@@ -54,3 +54,35 @@
           (match)
           (rest)
           (map re-read)))))
+
+(defn sl
+  "Multiline string literal pretty-parsing.
+
+    (sl \"these
+         are
+         the lines\")
+    ; => \"these\\nare\\nthe lines\\n\""
+  [s]
+  (let
+   [blank-prefix
+    (fn [s]
+      (loop [idx 0]
+        (if s
+          (if (and (< idx (.length s)) (Character/isWhitespace (.charAt s idx)))
+            (recur (inc idx))
+            (subs s 0 idx))
+          nil)))
+
+    deindent
+    (fn [line-seq]
+      (let
+       [prefix (blank-prefix (first line-seq))
+        deindent-line (fn [s]
+                        (when-not (str/starts-with? s prefix)
+                          (throw (Error.
+                                  "Line does not share first line's indentation")))
+                        (subs s (count prefix)))]
+        (map deindent-line line-seq)))
+
+    lines (str/split-lines s)]
+    (str/join "\n" (cons (first lines) (deindent (rest lines))))))
