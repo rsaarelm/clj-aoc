@@ -1,15 +1,15 @@
-run +args:
-    clj -m aoc.main run {{args}}
-
-test +args:
-    clj -m aoc.main test {{args}}
+# Example
+#     run 1525-1
+# Expects files src/aoc/a1525_1.clj and resources/1525.txt
+run task:
+    DAY={{task}}; clj -m aoc.a{{task}} < resources/${DAY:0:4}.txt
 
 unittest:
     clj -A:test:runner
 
 init day:
     #!/usr/bin/env bash
-    if [ ! -f src/aoc/a{{day}}.clj ]; then
+    if [ ! -f src/aoc/a{{day}}_1.clj ]; then
     ./init-day.sh {{day}}
     else
     echo "Day already set up."

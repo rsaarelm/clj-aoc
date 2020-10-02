@@ -1,3 +1,4 @@
+;; DEPRECATED, see a0001_1.clj
 (ns aoc.a0000)
 
 (defn- parse [input] input)

@@ -1,3 +1,4 @@
+; DEPRECATED
 (ns aoc.main
   (:require [clojure.string :as str]
             [aoc.util :refer [text->chunks]]))
