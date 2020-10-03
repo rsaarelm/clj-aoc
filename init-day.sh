@@ -11,16 +11,17 @@ cat > src/aoc/a$1_1.clj << EOF
        str/split-lines
        (map re-read)))
 
-(defn run [input]
+(defn- run [input]
   (parse input))
 
+(defn- r [input] (run (sl input)))
 (run!
-  (fn [[a b]] (is (= (run a) b)))
-  (partition
-    2
-    [(sl "1
-          2")
-     3]))
+ (fn [[a b]] (is (= a b)))
+ (partition
+  2
+  [(r "1
+       2")
+   3]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
@@ -32,16 +33,17 @@ cat > src/aoc/a$1_2.clj << EOF
             [clojure.string :as str]
             [clojure.test :refer [is]]))
 
-(defn run [input]
+(defn- run [input]
   (parse input))
 
+(defn- r [input] (run (sl input)))
 (run!
-  (fn [[a b]] (is (= (run a) b)))
-  (partition
-    2
-    [(sl "1
-          2")
-     3]))
+ (fn [[a b]] (is (= a b)))
+ (partition
+  2
+  [(r "1
+       2")
+   3]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
