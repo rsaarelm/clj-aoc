@@ -9,7 +9,10 @@
 
 (defn run [input] (reduce (partial +) 0 (parse input)))
 
-(run! #(is (= (run (first %)) (second %))) (partition 2
+(run!
+ (fn [[a b]] (is (= (run a) b)))
+ (partition
+  2
   ["(())"
    0,
    "()()"

@@ -14,10 +14,13 @@ cat > src/aoc/a$1_1.clj << EOF
 (defn run [input]
   (parse input))
 
-(run! #(is (= (run (first %)) (second %))) (partition 2
-  [(sl "1
-        2")
-   3]))
+(run!
+  (fn [[a b]] (is (= (run a) b)))
+  (partition
+    2
+    [(sl "1
+          2")
+     3]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
@@ -32,10 +35,13 @@ cat > src/aoc/a$1_2.clj << EOF
 (defn run [input]
   (parse input))
 
-(run! #(is (= (run (first %)) (second %))) (partition 2
-  [(sl "1
-        2")
-   3]))
+(run!
+  (fn [[a b]] (is (= (run a) b)))
+  (partition
+    2
+    [(sl "1
+          2")
+     3]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF

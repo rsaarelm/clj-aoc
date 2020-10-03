@@ -7,7 +7,10 @@
 (defn run [input]
   (str (parse input) ", World!"))
 
-(run! #(is (= (run (first %)) (second %))) (partition 2
+(run!
+ (fn [[a b]] (is (= (run a) b)))
+ (partition
+  2
   ["Hello"
    "Hello, World!"]))
 
