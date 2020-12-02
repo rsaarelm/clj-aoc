@@ -1,5 +1,5 @@
 (ns aoc.a2001-2
-  (:require [aoc.a2001-1 :refer [parse run]]
+  (:require [aoc.a2001-1 :refer [run]]
             [aoc.util :refer [sl]]
             [clojure.string :as str]
             [clojure.test :refer [is]]))
