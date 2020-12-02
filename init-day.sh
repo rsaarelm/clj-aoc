@@ -19,9 +19,11 @@ cat > src/aoc/a$1_1.clj << EOF
  (fn [[a b]] (is (= a b)))
  (partition
   2
-  [(r "1
-       2")
-   3]))
+  [(r "put
+       example
+       input
+       here")
+   "put example answer here"]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
@@ -41,9 +43,11 @@ cat > src/aoc/a$1_2.clj << EOF
  (fn [[a b]] (is (= a b)))
  (partition
   2
-  [(r "1
-       2")
-   3]))
+  [(r "put
+       example
+       input
+       here")
+   "put example answer here"]))
 
 (defn -main [& args] (->> (slurp *in*) (str/trim) (run) (println)))
 EOF
