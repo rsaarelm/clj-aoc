@@ -1,19 +1,20 @@
 (ns aoc.util
-  (:require [clojure.string :as str]))
+  (:require [aoc.vec :as v]
+            [clojure.string :as str]))
 
 (defn- unfortune
   "Convert text in unix fortune format into separated text chunks.
 
   The separator is a line with a single '%' character.
 
-  The last newline is omitted to allow newline-less single line inputs. To add
-  a newline, leave an empty line before the separating '%'.
+  The last newline is omitted to allow newline-less single line inputs.
+  To add a newline, leave an empty line before the separating '%'.
 
   The last item can be followed by an optional terminal '%'.
 
   BUGS
-  - Any number of trailing newlines will be collapsed to a single newline at
-    end."
+  - Any number of trailing newlines will be collapsed to
+    a single newline at end."
   [lines]
   (->> lines
        ; Ignore terminal '%'.
@@ -39,8 +40,9 @@
 (defn re-read
   "Tokenize a line with a regex and convert numbery results to numbers.
 
-  When called without a regex, converts a single token to a number if it's
-  numbery, otherwise returns it as is."
+  When called without a regex,
+  converts a single token to a number if it's numbery,
+  otherwise returns it as is."
   ([str]
    (let
     [expr (if (empty? str) str (read-string str))]
@@ -86,3 +88,37 @@
 
     lines (str/split-lines s)]
     (str/join "\n" (cons (first lines) (deindent (rest lines))))))
+
+; NB: str->grid is newer than sl
+; and uses a slightly different uniform indent removal strategy.
+; Leave an empty leading line with str->grid string literals.
+
+(defn str->grid
+  "Turn a string into `{[x y] -> char}` map.
+
+  Whitespace does not become values.
+  The string is clipped so that the first values
+  (left-to-right, top-to-bottom) show up on x and y axes.
+  This means that initial blank lines and indentation shared by all lines
+  will be removed.
+  Physical tabs will be treated as a runtime error
+  when they cause situations where the x positions of subsequent characters
+  cannot be reliably interpreted."
+  [s]
+  (let
+   [count-tab #(get {\tab 1/65536} % 1)  ; Mark tab characters as fractions.
+    row (fn [s]
+          (->> (reductions (fn [acc c] (+ acc (count-tab c))) 0 s)
+               (#(map vector % s))
+               (filter (fn [[_ c]] (not (Character/isWhitespace c))))))
+    raw-grid (->> (str/split-lines s)
+                  (map-indexed
+                   (fn [y line] (map (fn [[x c]] [[x y] c]) (row line))))
+                  (apply concat))
+    min-pos (->> (map first raw-grid) (reduce (partial mapv min)))
+    ; Tab characters must be cancelled out in snapped-grid - all x coords
+    ; become integers - or the result is invalid.
+    snapped-grid (into {} (map (fn [[p c]] [(v/- p min-pos) c]) raw-grid))]
+    (when (some (fn [[[x _] _]] (not (integer? x))) snapped-grid)
+      (throw (Error. "Tab characters outside shared indent, cannot form grid.")))
+    snapped-grid))
