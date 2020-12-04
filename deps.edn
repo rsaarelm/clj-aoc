@@ -6,7 +6,11 @@
         org.clojure/math.numeric-tower  {:mvn/version "0.0.4"}}
 
  :aliases
- {:test {:extra-paths ["test"]
+ {:nREPL
+  {:extra-deps
+   {nrepl/nrepl {:mvn/version "RELEASE"}}},
+
+  :test {:extra-paths ["test"]
          :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
   :runner
   {:extra-deps {com.cognitect/test-runner

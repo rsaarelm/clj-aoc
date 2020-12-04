@@ -8,7 +8,7 @@ cat > src/aoc/a$1_1.clj << EOF
 
 (defn parse [input]
   (->> input
-       str/split-lines
+       (str/split-lines)
        (map re-read)))
 
 (defn- run [input]
