@@ -73,14 +73,14 @@
           (if (and (< idx (.length s)) (Character/isWhitespace (.charAt s idx)))
             (recur (inc idx))
             (subs s 0 idx))
-          nil)))
+          "")))
 
     deindent
     (fn [line-seq]
       (let
-       [prefix (blank-prefix (first line-seq))
+       [prefix (blank-prefix (first (remove str/blank? line-seq)))
         deindent-line (fn [s]
-                        (if (empty? s) s
+                        (if (str/blank? s) s
                             (do
                               (when-not (str/starts-with? s prefix)
                                 (throw (Error.

@@ -28,4 +28,8 @@
   (is (= (sl " abc") " abc"))
   (is (= (sl "one
               two
-              three") "one\ntwo\nthree")))
+              three") "one\ntwo\nthree"))
+  (is (= (sl "one
+
+              two
+              three") "one\n\ntwo\nthree")))
