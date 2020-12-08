@@ -55,3 +55,6 @@ EOF
 # Make git see them so they show up in FZF
 git add -N src/aoc/a$1_1.clj
 git add -N src/aoc/a$1_2.clj
+
+touch resources/$1.txt
+git add -N resources/$1.txt
