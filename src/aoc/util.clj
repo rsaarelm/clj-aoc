@@ -124,3 +124,29 @@
     (when (some (fn [[[x _] _]] (not (integer? x))) snapped-grid)
       (throw (Error. "Tab characters outside shared indent, cannot form grid.")))
     snapped-grid))
+
+(defn points->box
+  "Return smallest bounding box that contains all listed points.
+
+  Outer edges are considered inclusive,
+  you may want to add [1 1] to size if you want outer-exclusive box."
+  [pts]
+  (let
+   [min-x (->> (map first pts) (reduce min))
+    min-y (->> (map second pts) (reduce min))
+    max-x (->> (map first pts) (reduce max))
+    max-y (->> (map second pts) (reduce max))]
+    [[min-x min-y] [(- max-x min-x) (- max-y min-y)]]))
+
+(defn print-grid
+  "Print a {[x y] -> char} map to stdout."
+  [grid]
+  (let
+   [[[x y] [w h]] (points->box (keys grid))]
+    (doseq [y (range y (+ y h 1))]
+      (doseq [x (range x (+ x w 1))]
+        (let [c (grid [x y])]
+          (cond
+            (char? c) (print c)
+            :else (print \space))))
+      (println))))
